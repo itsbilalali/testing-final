@@ -18,14 +18,17 @@ jobs:
 
       - name: Cherry pick into main
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
-        id: new-issue
+        id: cherry-pick
         with:
           branch: main
           force: true
-      - run: |
-          echo "${{ steps.new-issue.outputs }}"
   
-    
+      - name: Find Pull Request Number
+        id: find-pr
+        run: |
+          PR_NUMBER=$(gh pr list --head ${{ steps.cherry-pick.outputs.branch }} --json number --jq '.[0].number')
+          echo "Pull Request Number: $PR_NUMBER"
+          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV    
 
       - name: Remote View
         run: |
