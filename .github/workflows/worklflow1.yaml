@@ -22,13 +22,7 @@ jobs:
         with:
           branch: main
           force: true
-  
-      - name: Find Pull Request Number
-        id: find-pr
-        run: |
-          PR_NUMBER=$(gh pr list --head ${{ steps.cherry-pick.outputs.branch }} --json number --jq '.[0].number')
-          echo "Pull Request Number: $PR_NUMBER"
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV    
+    
 
       - name: Remote View
         run: |
