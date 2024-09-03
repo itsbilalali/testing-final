@@ -16,12 +16,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Cherry pick into main
-        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
-        id: cherry-pick
-        with:
-          branch: main
-          force: true
+    #   - name: Cherry pick into main
+    #     uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+    #     id: cherry-pick
+    #     with:
+    #       branch: main
+    #       force: true
     
 
       - name: Remote View
