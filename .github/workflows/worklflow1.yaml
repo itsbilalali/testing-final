@@ -27,9 +27,10 @@ jobs:
           branch: main
           force: true
       - run: |
-            echo "${{ steps.cherry-pick.outputs.data }}"
-            echo "${{ steps.cherry-pick.outputs.number }}" 
-            echo "${{ steps.cherry-pick.outputs.html_url }}"
+            echo "${{ steps.cherry-pick }}"
+            echo "${{ steps.cherry-pick.outputs }}" 
+            echo "${{ toJSON(steps.cherry-pick.outputs) }}"
+
 
       - name: Remote View
         run: |
