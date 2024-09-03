@@ -26,6 +26,7 @@ jobs:
         with:
           branch: main
           force: true
+          labels: tested
       - run: |
             echo "${{ steps.cherry-pick }}"
             echo "${{ steps.cherry-pick.outputs }}" 
