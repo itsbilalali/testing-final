@@ -16,6 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com
+
     #   - name: Cherry pick into main
     #     uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
     #     id: cherry-pick
@@ -24,7 +29,7 @@ jobs:
     #       force: true
     
 
-    
+
       - name: Remote View
         run: |
             git remote -v
