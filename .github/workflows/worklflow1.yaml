@@ -29,3 +29,14 @@ jobs:
             git remote -v
 
 
+      - name: Cherry-Pick PR Commits
+        run: |
+              # Get the PR number
+              PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
+              
+              # Fetch the PR commits
+              git fetch origin pull/$PR_NUMBER/head
+    
+              git checkout main
+
+              git push origin main
