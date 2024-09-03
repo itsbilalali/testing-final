@@ -15,6 +15,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          
+      - name: Name of Branch
+        run: |
+            echo "${{ github.event.pull_request.labels.name }}"
 
       - uses: actions/checkout@v3
       - uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
@@ -26,6 +30,7 @@ jobs:
             echo "${{ steps.cherry-pick }}"
             echo "${{ steps.cherry-pick.outputs }}" 
             echo "${{ toJSON(steps.cherry-pick.outputs) }}"
+            
 
 
       - name: Remote View
