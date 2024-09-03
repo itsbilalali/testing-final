@@ -25,7 +25,12 @@ jobs:
         run: |
             git remote -v
 
-      - name: Push changes
-        run: |
-            git push origin main
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          branch: main
+          base: main
+          title: 'Automated Cherry-Pick PR'
+          body: 'This PR was automatically created by cherry-picking commit(s) into the main branch.'
 
