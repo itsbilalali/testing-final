@@ -23,9 +23,7 @@ jobs:
           branch: main
           force: true
       - run: |
-          echo "${{ steps.new-issue.outputs.data }}"
-          echo "${{ steps.new-issue.outputs.number }}" 
-          echo "${{ steps.new-issue.outputs.html_url }}"
+          echo "${{ steps.new-issue.outputs }}"
   
     
 
