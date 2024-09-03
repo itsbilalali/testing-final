@@ -25,40 +25,7 @@ jobs:
         run: |
             git remote -v
 
-      - name: Get the latest commit SHA
-        id: get_sha
-        run: echo "PR_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
-
-      - name: Create a new branch for PR
+      - name: Push changes
         run: |
-          BRANCH_NAME=pr-to-main-${{ github.event.pull_request.number }}
-          git checkout -b $BRANCH_NAME
-          git push origin $BRANCH_NAME
+            git push origin main
 
-      - name: Create Pull Request from the cherry-picked commit to main
-        env: 
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          PR_TITLE="Auto Cherry-Pick PR #${{ github.event.pull_request.number }} to Main"
-          gh pr create --base main --head pr-to-main-${{ github.event.pull_request.number }} --title "$PR_TITLE" --body "Automated PR to merge cherry-picked changes from PR #${{ github.event.pull_request.number }} to main after passing QA."
-          
-      - name: Auto Merge the new Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          gh pr merge $BRANCH_NAME --auto --squash --delete-branch
-
-      - name: Comment on original PR
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: ${{ github.event.pull_request.number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "A new pull request has been automatically created, merged into main, and the branch has been deleted."
-            })
-
-
-env:
-  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
