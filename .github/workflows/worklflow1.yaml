@@ -38,5 +38,5 @@ jobs:
               git fetch origin pull/$PR_NUMBER/head
     
               git checkout main
-
+              git cherry-pick FETCH_HEAD
               git push origin main
