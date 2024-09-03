@@ -21,6 +21,7 @@ jobs:
         id: new-issue
         with:
           branch: main
+          force: true
       - run: |
           echo "${{ steps.new-issue.outputs.data }}"
           echo "${{ steps.new-issue.outputs.number }}" 
