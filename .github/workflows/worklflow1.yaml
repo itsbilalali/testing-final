@@ -1,0 +1,51 @@
+name: Merge PR to Main on Label
+
+on:
+  pull_request:
+    types:
+      - labeled
+
+jobs:
+  cherry_pick_to_main:
+    runs-on: ubuntu-latest
+    name: Cherry pick into main
+    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.label.name, 'release-') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: Name of Branch
+        run: |
+            echo "${{ github.event.label.name }}"
+
+      - uses: actions/checkout@v3
+      - uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+        id: cherry-pick
+        with:
+          branch: ${{ github.event.label.name }} 
+          force: true
+      - run: |
+            echo "${{ steps.cherry-pick }}"
+            echo "${{ steps.cherry-pick.outputs }}" 
+            echo "${{ toJSON(steps.cherry-pick.outputs) }}"
+            
+
+
+      - name: Remote View
+        run: |
+            git remote -v
+
+
+    #   - name: Cherry-Pick PR Commits
+    #     run: |
+    #           # Get the PR number
+    #           PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
+              
+    #           # Fetch the PR commits
+    #           git fetch origin pull/$PR_NUMBER/head
+    
+    #           git checkout ${{ github.event.pull_request.labels.name }} 
+    #           git cherry-pick FETCH_HEAD
+    #           git push origin ${{ github.event.pull_request.labels.name }} 
