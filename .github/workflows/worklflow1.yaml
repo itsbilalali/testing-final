@@ -18,8 +18,15 @@ jobs:
 
       - name: Cherry pick into main
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+        id: new-issue
         with:
           branch: main
+      - run: |
+          echo "${{ steps.new-issue.outputs.data }}"
+          echo "${{ steps.new-issue.outputs.number }}" 
+          echo "${{ steps.new-issue.outputs.html_url }}"
+  
+    
 
       - name: Remote View
         run: |
